@@ -6,16 +6,13 @@ All notable changes to `filament-otp-input` will be documented in this file.
 
 ### What's Changed
 
-- Remove: Unused method
-  Full Changelog: https://github.com/hasan-ahani/filament-otp-input/compare/v1.0.1...v1.0.2
-
+-   Remove: Unused method
+    Full Changelog: https://github.com/alqabali/filament-image-preview
 
 ## 1.0.1 - 2024-01-29
 
-- Fix bug
-
+-   Fix bug
 
 ## 1.0.0 - 2024-01-29
 
-- Initial release
-
+-   Initial release

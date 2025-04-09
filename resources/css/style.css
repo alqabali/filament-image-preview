@@ -1,0 +1,9 @@
+@tailwind components;
+@tailwind utilities;
+@tailwind base;
+
+@layer utilities {
+    .fi-image-preview-alt{
+        @apply bg-red-300;
+    }
+}

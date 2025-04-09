@@ -147,7 +147,17 @@ class ImagePreview extends Field
 
     public function getImageUrl(?string $state = null): ?string
     {
-        if ((filter_var($state, FILTER_VALIDATE_URL) !== false) || str($state)->startsWith('data:')) {
+        // Skip if null
+        if (empty($state)) {
+            return null;
+        }
+
+        // Handle full URL or base64
+        if (
+            filter_var($state, FILTER_VALIDATE_URL) !== false ||
+            str($state)->startsWith('data:') ||
+            str($state)->startsWith('<svg')
+        ) {
             return $state;
         }
 

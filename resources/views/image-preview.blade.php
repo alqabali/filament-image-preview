@@ -6,7 +6,6 @@
     $name = $getName();
     $value = $getState() ?? null;
 
-    // مصدر الصورة
     $rawImage = $value ?? $getImage();
 
     $image = $rawImage ? $getImageUrl($rawImage) : $getDefaultImageUrl();

@@ -12,7 +12,7 @@ class ImagePreview extends Field
 {
     use HasExtraAlpineAttributes;
 
-    protected string $view = 'backend.core.forms.components.image-preview';
+    protected string $view = 'filament-image-preview::image-preview';
 
     protected string | \Closure  $image;
     protected int | \Closure | null $width = 96;
@@ -20,7 +20,9 @@ class ImagePreview extends Field
     protected bool | \Closure $circular = false;
     protected string | int | \Closure | null $size = 'md';
     protected string | HtmlString | \Closure | null $alt = null;
-    protected array | \Closure $altAttributes  = [];
+    protected array | \Closure $altAttributes = [
+        ['class' => 'fi-image-preview-alt text-gray-200 dark:text-gray-100'],
+    ];
 
 
     public function image(string | \Closure $image): static

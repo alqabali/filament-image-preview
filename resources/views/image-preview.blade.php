@@ -1,36 +1,43 @@
 @php
     $id = $getId();
-    $isConcealed = $isConcealed();
     $isDisabled = $isDisabled();
     $statePath = $getStatePath();
     $hasInlineLabel = $hasInlineLabel();
-    $record = $getRecord();
-    $collection = $getName();
     $name = $getName();
-    $value = $record?->{$name} ?? null;
+    $value = $getState() ?? null;
+
+    // مصدر الصورة
+    $rawImage = $value ?? $getImage();
+
+    $image = $rawImage ? $getImageUrl($rawImage) : $getDefaultImageUrl();
+
     $width = $getWidth();
     $height = $getHeight();
-    $shape = $isCircular() ? 'rounded-full' : 'rounded-md';
-    $image = $value ? asset($value) : $getImage();
-    $isSvgCode = Str::startsWith($image, '<svg');
-    $altClass = $getAltAttributeBag()->get('class');
+    $shape = $isCircular() ? 'rounded-full' : ($isSquare() ? 'rounded-none' : 'rounded-md');
+
+    $isSvgCode = is_string($image) && Str::startsWith($image, '<svg');
+
+    $altText = $getAlt();
+    $altClass = $getAltAttributeBag()->get('class') ?? '';
 @endphp
-<x-dynamic-component :component="$getFieldWrapperView()" :id="$getId()" :label="$getLabel()" :label-sr-only="$isLabelHidden()" :helper-text="$getHelperText()"
-    :hint="$getHint()" :hint-actions="$getHintActions()" :hint-icon="$getHintIcon()" :required="$isRequired()" :state-path="$getStatePath()" :has-inline-label="$hasInlineLabel"
+
+<x-dynamic-component :component="$getFieldWrapperView()" :id="$id" :label="$getLabel()" :label-sr-only="$isLabelHidden()" :helper-text="$getHelperText()"
+    :hint="$getHint()" :hint-actions="$getHintActions()" :hint-icon="$getHintIcon()" :required="$isRequired()" :state-path="$statePath" :has-inline-label="$hasInlineLabel"
     :attributes="\Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())->class([
         'fi-image-preview overflow-hidden',
     ])">
     <div class="flex flex-col items-center space-y-0">
         @if ($isSvgCode)
             {!! $image !!}
-        @else
-            <img src="{{ $image }}"
-                class="object-cover shadow {{ $shape }} h-[{{ $height }}px] w-[{{ $width }}px]" />
+        @elseif ($image)
+            <img src="{{ $image }}" alt="{{ $altText }}" class="object-cover shadow {{ $shape }}"
+                style="width: {{ $width }}; height: {{ $height }};" />
         @endif
-        <div
-            {{ \Filament\Support\prepare_inherited_attributes($getAltAttributeBag())->class(['fi-image-preview-alt']) }}>
 
-            {{ $getAlt() }}
-        </div>
+        @if ($altText)
+            <div class="fi-image-preview-alt {{ $altClass }}">
+                {{ $altText }}
+            </div>
+        @endif
     </div>
 </x-dynamic-component>

@@ -13,14 +13,4 @@ class FilamentImagePreviewServiceProvider extends PackageServiceProvider
     {
         $package->name('filament-image-preview')->hasViews();
     }
-    public function packageBooted(): void
-    {
-
-        FilamentAsset::register(
-            assets: [
-                Css::make('filament-image-preview', __DIR__ . '/../resources/dist/style.css'),
-            ],
-            package: 'alqabali/filament-image-preview'
-        );
-    }
 }
